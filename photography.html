@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Photography Gallery | Telmuun Davaadalai</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" href="assets/css/portfolio.css" />
+	</head>
+	<body>
+		<header class="site-header">
+			<div class="site-header-inner">
+				<a class="brand" href="index.html#projects">TELMUUN DAVAADALAI</a>
+				<nav class="top-nav" aria-label="Section Menu">
+					<a class="nav-link" href="index.html#about">About</a>
+					<a class="nav-link" href="index.html#work">Work</a>
+					<a class="nav-link" href="index.html#notes">Notes</a>
+					<a class="nav-link active" href="index.html#projects">Projects</a>
+					<a class="nav-link" href="index.html#contact">Contact</a>
+				</nav>
+				<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">🌙</button>
+			</div>
+		</header>
+
+		<main class="content-shell gallery-shell">
+			<section class="section" id="gallery">
+				<div class="eyebrow">Photography</div>
+				<h1>Best Photo Selections</h1>
+				<p class="gallery-intro">A simple place to show your strongest images with a short note under each one.</p>
+
+				<div class="gallery-grid">
+					<article class="gallery-card">
+						<img src="images/thumbs/01.jpg" alt="Photo 1" />
+						<div class="gallery-caption">
+							<h2>Golden Hour</h2>
+							<p>A quiet frame shaped by warm light and soft contrast.</p>
+						</div>
+					</article>
+
+					<article class="gallery-card">
+						<img src="images/thumbs/02.jpg" alt="Photo 2" />
+						<div class="gallery-caption">
+							<h2>City Movement</h2>
+							<p>A street moment captured with motion and rhythm.</p>
+						</div>
+					</article>
+
+					<article class="gallery-card">
+						<img src="images/thumbs/03.jpg" alt="Photo 3" />
+						<div class="gallery-caption">
+							<h2>Stillness</h2>
+							<p>A calm composition built around negative space and depth.</p>
+						</div>
+					</article>
+				</div>
+			</section>
+		</main>
+
+		<script>
+			const themeToggle = document.getElementById('themeToggle');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			document.body.classList.toggle('light-mode', !prefersDark);
+			document.body.classList.toggle('dark-mode', prefersDark);
+			themeToggle.textContent = prefersDark ? '☀️' : '🌙';
+
+			themeToggle.addEventListener('click', () => {
+				const isLight = document.body.classList.toggle('light-mode');
+				document.body.classList.toggle('dark-mode', !isLight);
+				themeToggle.textContent = isLight ? '🌙' : '☀️';
+			});
+		</script>
+	</body>
+</html>
