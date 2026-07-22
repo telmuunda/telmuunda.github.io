@@ -260,10 +260,29 @@ li {
 
 .portrait-links a i,
 .portrait-links a img {
-  width: 1.15rem;
-  height: 1.15rem;
-  object-fit: contain;
+  width: 1.15rem !important;
+  height: 1.15rem !important;
+  object-fit: contain !important;
   display: block;
+  max-width: none !important;
+}
+
+/* Ensure contact & portrait icons never scale up on large screens */
+.contact-icon,
+.contact-links img,
+.portrait-links a img {
+  width: 1rem !important;
+  height: 1rem !important;
+  max-width: 1rem !important;
+  max-height: 1rem !important;
+  object-fit: contain !important;
+  flex-shrink: 0;
+}
+
+/* Fallback for any ancestor rules that expand images */
+.contact-item img,
+.portrait-links img {
+  display: inline-block !important;
 }
 
 .portrait-links a:hover {
