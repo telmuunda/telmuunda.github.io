@@ -258,9 +258,12 @@ li {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.portrait-links a i {
-  font-size: 0.95rem;
-  line-height: 1;
+.portrait-links a i,
+.portrait-links a img {
+  width: 1.15rem;
+  height: 1.15rem;
+  object-fit: contain;
+  display: block;
 }
 
 .portrait-links a:hover {
