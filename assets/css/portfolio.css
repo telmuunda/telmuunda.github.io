@@ -320,6 +320,66 @@ li {
   margin: 1rem 0 0;
 }
 
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+  margin: 1rem 0 1.2rem;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+}
+
+.contact-links a img {
+  width: 1.25rem;
+  height: 1.25rem;
+  object-fit: contain;
+  display: block;
+}
+
+.github-logo-light,
+.github-logo-dark {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.github-logo-light {
+  display: inline-block;
+}
+
+.github-logo-dark {
+  display: none;
+}
+
+body.dark-mode .github-logo-light {
+  display: none;
+}
+
+body.dark-mode .github-logo-dark {
+  display: inline-block;
+}
+
+body.light-mode .github-logo-light {
+  display: inline-block;
+}
+
+body.light-mode .github-logo-dark {
+  display: none;
+}
+
 .contact-list li + li {
   margin-top: 0.7rem;
 }
