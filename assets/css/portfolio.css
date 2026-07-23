@@ -337,10 +337,17 @@ li {
   list-style: none;
   padding: 0;
   margin: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-list li {
+  margin: 0;
 }
 
 .contact-item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.75rem;
   width: 100%;
@@ -367,19 +374,10 @@ li {
   flex-shrink: 0;
 }
 
-.github-logo-light,
 .github-logo-dark {
   width: 1rem !important;
   height: 1rem !important;
   object-fit: contain;
-  display: inline-block;
-}
-
-.github-logo-dark {
-  display: none;
-}
-
-body.dark-mode .github-logo-light {
   display: none;
 }
 
@@ -387,20 +385,13 @@ body.dark-mode .github-logo-dark {
   display: inline-block;
 }
 
-body.light-mode .github-logo-light {
-  display: inline-block;
-}
-
 body.light-mode .github-logo-dark {
   display: none;
 }
 
-.contact-list li + li {
-  margin-top: 0.75rem;
-}
-
 .contact-item span {
   display: inline-block;
+  min-width: 0;
   max-width: calc(100% - 1.5rem);
   overflow-wrap: anywhere;
 }
