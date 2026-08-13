@@ -365,21 +365,21 @@ li {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  min-height: 16rem;
+  min-height: 12rem;
   text-decoration: none;
   color: inherit;
 }
 
 .blog-card-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 2.7rem;
+  height: 2.7rem;
   display: grid;
   place-items: center;
-  border-radius: 14px;
+  border-radius: 12px;
   background: rgba(157, 226, 203, 0.14);
   border: 1px solid var(--line);
-  font-size: 1.4rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.65rem;
 }
 
 .project-link {
