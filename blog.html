@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Blog | Telmuun Davaadalai</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" href="assets/css/portfolio.css" />
+	</head>
+	<body>
+		<header class="site-header">
+			<div class="site-header-inner">
+				<a class="brand" href="index.html#projects">TELMUUN DAVAADALAI</a>
+				<nav class="top-nav" aria-label="Section Menu">
+					<a class="nav-link" href="index.html#about">About</a>
+					<a class="nav-link" href="index.html#work">Work</a>
+					<a class="nav-link" href="index.html#notes">Notes</a>
+					<a class="nav-link active" href="index.html#projects">Projects</a>
+					<a class="nav-link" href="index.html#contact">Contact</a>
+				</nav>
+				<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">🌙</button>
+			</div>
+		</header>
+
+		<main class="content-shell blog-shell">
+			<section class="section" id="blog-home">
+				<div class="eyebrow">Blog</div>
+				<h1>Writing and reflections</h1>
+				<p class="blog-intro">
+					This page is for longer-form explanations, study insights, and topics I want to share in more depth.
+					You can add new posts here as they are written, including equations, figures, and references.
+				</p>
+
+				<div class="blog-list">
+					<article class="blog-preview">
+						<span class="blog-meta">Example post</span>
+						<h3>How to study physics without feeling overwhelmed</h3>
+						<p>Start from intuition, understand the core ideas, and build your problem-solving habits slowly and consistently.</p>
+						<a class="blog-link" href="blog-post-example.html">Read article →</a>
+					</article>
+				</div>
+
+				<div class="blog-post">
+					<h2>How to add a new blog post</h2>
+					<ol class="blog-steps">
+						<li>Create a new HTML file in the same folder as this page, for example <strong>blog-post-01.html</strong>.</li>
+						<li>Copy the structure from the example below, and change the title, date, heading, and content text.</li>
+						<li>Add a link to the new post in this blog homepage by creating another article block in the <strong>.blog-list</strong> section.</li>
+						<li>Use plain HTML for math, images, and formatting. For LaTeX, you can either render equations with MathJax or embed screenshots/PNG images of the equation.</li>
+					</ol>
+
+					<h3>Example blog post template</h3>
+					<div class="code-block"><code>&lt;article class="blog-post"&gt;
+  &lt;span class="blog-meta"&gt;April 2026&lt;/span&gt;
+  &lt;h2&gt;My post title&lt;/h2&gt;
+  &lt;p&gt;Introductory paragraph here.&lt;/p&gt;
+
+  &lt;figure&gt;
+    &lt;img src="files/my-image.jpg" alt="Description" /&gt;
+    &lt;figcaption&gt;Optional caption&lt;/figcaption&gt;
+  &lt;/figure&gt;
+
+  &lt;p&gt;Use standard HTML tags for paragraphs, lists, and emphasis.&lt;/p&gt;
+  &lt;p&gt;For mathematics, either use MathJax or write the equation as an image.&lt;/p&gt;
+&lt;/article&gt;</code></div>
+
+					<h3>Recommended setup for LaTeX and images</h3>
+					<ul class="blog-steps">
+						<li>Place images in a folder such as <strong>files/</strong> or a dedicated subfolder like <strong>files/blog/</strong>.</li>
+						<li>Use descriptive filenames so they stay organized as your blog grows.</li>
+						<li>If you want equations to display properly, include the MathJax script in the page head:</li>
+					</ul>
+
+					<div class="code-block"><code>&lt;script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"&gt;&lt;/script&gt;</code></div>
+
+					<p>Then write equations like:</p>
+					<div class="code-block"><code>$$
+E = mc^2
+$$</code></div>
+
+					<p>For simple posts, it is often easiest to keep text in HTML and use screenshots or uploaded images for equations if you want the exact look you prefer.</p>
+				</div>
+			</section>
+		</main>
+
+		<script>
+			const themeToggle = document.getElementById('themeToggle');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			document.body.classList.toggle('light-mode', !prefersDark);
+			document.body.classList.toggle('dark-mode', prefersDark);
+			themeToggle.textContent = prefersDark ? '☀️' : '🌙';
+
+			themeToggle.addEventListener('click', () => {
+				const isLight = document.body.classList.toggle('light-mode');
+				document.body.classList.toggle('dark-mode', !isLight);
+				themeToggle.textContent = isLight ? '🌙' : '☀️';
+			});
+		</script>
+	</body>
+</html>
