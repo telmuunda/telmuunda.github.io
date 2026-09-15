@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Blog Post | Telmuun Davaadalai</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="assets/css/fontawesome-all.min.css" />
+		<link rel="stylesheet" href="assets/css/portfolio.css" />
+	</head>
+	<body>
+		<header class="site-header">
+			<div class="site-header-inner">
+				<a class="brand" href="index.html#projects">TELMUUN DAVAADALAI</a>
+				<nav class="top-nav" aria-label="Section Menu">
+					<a class="nav-link" href="index.html#about">About</a>
+					<a class="nav-link" href="index.html#work">Work</a>
+					<a class="nav-link" href="index.html#notes">Notes</a>
+					<a class="nav-link active" href="blog.html">Blog</a>
+					<a class="nav-link" href="index.html#contact">Contact</a>
+				</nav>
+				<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">🌙</button>
+			</div>
+		</header>
+
+		<main class="content-shell blog-shell">
+			<article class="blog-post">
+				<span class="blog-meta">April 2026</span>
+				<h2>Title of your blog post</h2>
+				<p>Start with a short intro paragraph that sets the context for your post and tells the reader what they will learn.</p>
+
+				<p>You can write your full blog here in clean HTML. Add sections, quotes, lists, and images as needed. This page is a foundation you can build on without changing the overall design.</p>
+
+				<h3>Section heading</h3>
+				<p>Use this area for your main thoughts, explanations, and reflections. Keep paragraphs readable and break up long sections with small headings.</p>
+
+				<ul class="blog-steps">
+					<li>Write in short, clear paragraphs.</li>
+					<li>Use strong ideas instead of too much filler.</li>
+					<li>Include examples or references when they help.</li>
+				</ul>
+
+				<figure>
+					<img src="files/instagramlogo.avif" alt="Example blog image" />
+					<figcaption>Optional image caption.</figcaption>
+				</figure>
+
+				<p>For equations, you can either embed an image or add MathJax to this page if you want rendered LaTeX. For a simple version, keeping text and screenshots is enough.</p>
+
+				<p><a class="inline-link" href="blog.html">← Back to blog</a></p>
+			</article>
+		</main>
+
+		<script>
+			const themeToggle = document.getElementById('themeToggle');
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+			document.body.classList.toggle('light-mode', !prefersDark);
+			document.body.classList.toggle('dark-mode', prefersDark);
+			themeToggle.textContent = prefersDark ? '☀️' : '🌙';
+
+			themeToggle.addEventListener('click', () => {
+				const isLight = document.body.classList.toggle('light-mode');
+				document.body.classList.toggle('dark-mode', !isLight);
+				themeToggle.textContent = isLight ? '🌙' : '☀️';
+			});
+		</script>
+	</body>
+</html>
