@@ -36,69 +36,18 @@
 
 				<div class="blog-featured">
 					<article class="blog-featured-card">
-						<span class="featured-badge">Featured</span>
-						<h2>My most important idea this month</h2>
-						<p>Use this highlighted block for a standout post, a thought piece, or a subject you want people to read first.</p>
-						<a class="blog-link" href="blog-post-example.html">Read featured post →</a>
+						<span class="featured-badge" id="news-month">Physics &amp; astronomy news</span>
+						<h2 id="news-title">Loading the latest science story...</h2>
+						<p id="news-summary" aria-live="polite">The monthly feature is being loaded.</p>
+						<p class="blog-meta" id="news-source"></p>
+						<a class="blog-link" id="news-link" href="https://www.sciencedaily.com/news/space_time/astronomy/" target="_blank" rel="noopener noreferrer">Read the original report</a>
 					</article>
 				</div>
 
 				<div class="blog-list">
-					<article class="blog-preview">
-						<span class="blog-meta">Example post</span>
-						<h3>How to study physics without feeling overwhelmed</h3>
-						<p>Start from intuition, understand the core ideas, and build your problem-solving habits slowly and consistently.</p>
-						<a class="blog-link" href="blog-post-example.html">Read article →</a>
-					</article>
-
-					<article class="blog-preview">
-						<span class="blog-meta">Field notes</span>
-						<h3>Designing a calmer study routine</h3>
-						<p>Small systems beat perfect plans. Build a weekly rhythm that supports deep work instead of constant pressure.</p>
-						<a class="blog-link" href="blog-post-example.html">Read article →</a>
-					</article>
 				</div>
-
-				<div class="blog-post">
-					<h2>How to add a new blog post</h2>
-					<ol class="blog-steps">
-						<li>Create a new HTML file in the same folder as this page, for example <strong>blog-post-01.html</strong>.</li>
-						<li>Copy the structure from the example below, and change the title, date, heading, and content text.</li>
-						<li>Add a link to the new post in this blog homepage by creating another article block in the <strong>.blog-list</strong> section.</li>
-						<li>Use plain HTML for math, images, and formatting. For LaTeX, you can either render equations with MathJax or embed screenshots/PNG images of the equation.</li>
-					</ol>
-
-					<h3>Example blog post template</h3>
-					<div class="code-block"><code>&lt;article class="blog-post"&gt;
-  &lt;span class="blog-meta"&gt;April 2026&lt;/span&gt;
-  &lt;h2&gt;My post title&lt;/h2&gt;
-  &lt;p&gt;Introductory paragraph here.&lt;/p&gt;
-
-  &lt;figure&gt;
-    &lt;img src="files/my-image.jpg" alt="Description" /&gt;
-    &lt;figcaption&gt;Optional caption&lt;/figcaption&gt;
-  &lt;/figure&gt;
-
-  &lt;p&gt;Use standard HTML tags for paragraphs, lists, and emphasis.&lt;/p&gt;
-  &lt;p&gt;For mathematics, either use MathJax or write the equation as an image.&lt;/p&gt;
-&lt;/article&gt;</code></div>
-
-					<h3>Recommended setup for LaTeX and images</h3>
-					<ul class="blog-steps">
-						<li>Place images in a folder such as <strong>files/</strong> or a dedicated subfolder like <strong>files/blog/</strong>.</li>
-						<li>Use descriptive filenames so they stay organized as your blog grows.</li>
-						<li>If you want equations to display properly, include the MathJax script in the page head:</li>
-					</ul>
-
-					<div class="code-block"><code>&lt;script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"&gt;&lt;/script&gt;</code></div>
-
-					<p>Then write equations like:</p>
-					<div class="code-block"><code>$$
-E = mc^2
-$$</code></div>
-
-					<p>For simple posts, it is often easiest to keep text in HTML and use screenshots or uploaded images for equations if you want the exact look you prefer.</p>
-				</div>
+				<p class="blog-meta" id="blog-empty" hidden>No posts published yet.</p>
+				<p class="blog-meta">News source: <a href="https://www.sciencedaily.com/" target="_blank" rel="noopener noreferrer">ScienceDaily</a>. Headlines and summaries are credited to the original publisher.</p>
 			</section>
 		</main>
 
@@ -115,6 +64,49 @@ $$</code></div>
 				document.body.classList.toggle('dark-mode', !isLight);
 				themeToggle.textContent = isLight ? '🌙' : '☀️';
 			});
+		</script>
+		<script>
+			fetch('assets/data/physics-news.json')
+				.then((response) => {
+					if (!response.ok) throw new Error('News data is unavailable');
+					return response.json();
+				})
+				.then(({ month, story }) => {
+					document.getElementById('news-month').textContent = `Physics & astronomy news · ${month}`;
+					document.getElementById('news-title').textContent = story.title;
+					document.getElementById('news-summary').textContent = story.summary;
+					document.getElementById('news-source').textContent = `${story.category} · ${story.published_at} · ScienceDaily`;
+					document.getElementById('news-link').href = story.url;
+				})
+				.catch(() => {
+					document.getElementById('news-title').textContent = 'Science news is temporarily unavailable';
+					document.getElementById('news-summary').textContent = 'Please visit ScienceDaily for the latest physics and astronomy reports.';
+				});
+
+			fetch('assets/data/blog-posts.json')
+				.then((response) => response.ok ? response.json() : [])
+				.then((posts) => {
+					const list = document.querySelector('.blog-list');
+					for (const post of posts) {
+						const article = document.createElement('article');
+						article.className = 'blog-preview';
+						const date = document.createElement('span');
+						date.className = 'blog-meta';
+						date.textContent = post.date;
+						const title = document.createElement('h3');
+						title.textContent = post.title;
+						const summary = document.createElement('p');
+						summary.textContent = post.summary;
+						const link = document.createElement('a');
+						link.className = 'blog-link';
+						link.href = post.url;
+						link.textContent = 'Read article →';
+						article.append(date, title, summary, link);
+						list.append(article);
+					}
+					document.getElementById('blog-empty').hidden = posts.length > 0;
+				})
+				.catch(() => {});
 		</script>
 	</body>
 </html>
