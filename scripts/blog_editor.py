@@ -4,7 +4,8 @@
 from datetime import date, datetime
 from html import escape
 from html.parser import HTMLParser
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import errno
 from pathlib import Path
 import json
 import re
@@ -12,7 +13,6 @@ from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EDITOR = ROOT / "blog-editor.html"
 POSTS_DIR = ROOT / "posts"
 POST_INDEX = ROOT / "assets" / "data" / "blog-posts.json"
 PORT = 8765
@@ -193,44 +193,48 @@ def publish_post(payload):
     return {"path": str(post_path.relative_to(ROOT)), "url": entry["url"]}
 
 
-class EditorHandler(BaseHTTPRequestHandler):
+class EditorHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=str(ROOT), **kwargs)
+
+    def end_headers(self):
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        super().end_headers()
+
     def send_json(self, status, payload):
         encoded = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(encoded)))
-        self.send_header("Cache-Control", "no-store")
-        self.send_header("X-Content-Type-Options", "nosniff")
         self.end_headers()
         self.wfile.write(encoded)
 
     def do_GET(self):
+        if self.headers.get("Host") not in (f"127.0.0.1:{PORT}", f"localhost:{PORT}"):
+            self.send_error(403)
+            return
         if self.path == "/favicon.ico":
             self.send_response(204)
             self.end_headers()
             return
-        if self.path not in ("/", "/blog-editor.html"):
-            self.send_error(404)
+        if self.path == "/":
+            self.send_response(302)
+            self.send_header("Location", "/blog-editor.html")
+            self.end_headers()
             return
-        content = EDITOR.read_bytes()
-        self.send_response(200)
-        self.send_header("Content-Type", "text/html; charset=utf-8")
-        self.send_header("Content-Length", str(len(content)))
-        self.send_header("Cache-Control", "no-store")
-        self.send_header("X-Content-Type-Options", "nosniff")
-        self.end_headers()
-        self.wfile.write(content)
+        super().do_GET()
 
     def do_POST(self):
         if self.path != "/publish":
-            self.send_error(404)
+            self.send_json(404, {"error": "Unknown publishing endpoint."})
             return
         if self.headers.get("Host") not in (f"127.0.0.1:{PORT}", f"localhost:{PORT}"):
-            self.send_error(403)
+            self.send_json(403, {"error": "Open the editor at http://127.0.0.1:8765/blog-editor.html to publish locally."})
             return
         origin = self.headers.get("Origin")
         if origin and origin not in (f"http://127.0.0.1:{PORT}", f"http://localhost:{PORT}"):
-            self.send_error(403)
+            self.send_json(403, {"error": "Publishing requests must come from the local blog editor at http://127.0.0.1:8765/blog-editor.html."})
             return
         if self.headers.get_content_type() != "application/json":
             self.send_json(415, {"error": "Expected a JSON publishing request."})
@@ -240,6 +244,8 @@ class EditorHandler(BaseHTTPRequestHandler):
             if length <= 0 or length > 1_100_000:
                 raise ValueError("The publishing request is empty or too large.")
             payload = json.loads(self.rfile.read(length))
+            if not isinstance(payload, dict):
+                raise ValueError("The publishing request must contain a post object.")
             result = publish_post(payload)
         except FileExistsError as error:
             self.send_json(409, {"error": str(error)})
@@ -257,7 +263,15 @@ class EditorHandler(BaseHTTPRequestHandler):
 def main():
     print(f"Blog editor: http://127.0.0.1:{PORT}/")
     print("Only this computer can connect. Press Ctrl+C to stop the editor.")
-    HTTPServer(("127.0.0.1", PORT), EditorHandler).serve_forever()
+    try:
+        server = HTTPServer(("127.0.0.1", PORT), EditorHandler)
+    except OSError as error:
+        if error.errno == errno.EADDRINUSE:
+            raise SystemExit(
+                f"Port {PORT} is already in use. Stop the existing blog editor with Ctrl+C, then start it again."
+            ) from error
+        raise
+    server.serve_forever()
 
 
 if __name__ == "__main__":

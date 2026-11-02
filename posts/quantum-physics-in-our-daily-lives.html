@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Quantum Physics in our daily lives | Telmuun Davaadalai</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="../assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="../assets/css/portfolio.css" />
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header-inner">
+			<a class="brand" href="../index.html#projects">TELMUUN DAVAADALAI</a>
+			<nav class="top-nav" aria-label="Section Menu">
+				<a class="nav-link" href="../index.html#about">About</a>
+				<a class="nav-link" href="../index.html#work">Work</a>
+				<a class="nav-link" href="../index.html#notes">Notes</a>
+				<a class="nav-link active" href="../blog.html">Blog</a>
+				<a class="nav-link" href="../index.html#contact">Contact</a>
+			</nav>
+			<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">🌙</button>
+		</div>
+	</header>
+	<main class="content-shell blog-shell">
+		<article class="blog-post">
+			<span class="blog-meta">October 16, 2026</span>
+			<h1>Quantum Physics in our daily lives</h1>
+			Quantum Physics Is Literally in Your Pocket
+<p>When most people hear &quot;quantum physics,&quot; they picture sci-fi movies and scientists arguing about cats in boxes. But it turns out quantum mechanics is a big part of everyday life, and a lot of the technology we use all day wouldn&#x27;t exist without it. The chips in your phone and laptop are made of billions of tiny transistors, and those only work because of how electrons behave in semiconductors. Electrons sit at specific energy levels, and materials like silicon can be tweaked to control exactly how electricity flows through them. No quantum physics, no computers. No computers, no Instagram, and no way anyone is turning in assignments on time (okay, barely on time).</p>
+<p>The same idea shows up in how things light up. When electrons drop from a higher energy level to a lower one, they release light, which is how LEDs work, including your phone screen and the lights in your room. Lasers run on a related principle, and they&#x27;re in barcode scanners, Blu-ray players, and the fiber-optic cables that carry internet traffic. So the Wi-Fi we all complain about constantly depends on lasers sending light through glass.</p>
+<p>It goes beyond electronics, too. MRI machines use a quantum property of atoms called spin to build images of the inside of your body without cutting anything open. Solar panels work because light knocks electrons loose in a material, which is called the photoelectric effect, and it&#x27;s actually what Einstein won his Nobel Prize for, not relativity. That&#x27;s a great fact to bring up at parties, whether or not anyone asked.</p>
+<p>Then there&#x27;s the sun. Protons shouldn&#x27;t have enough energy to overcome their mutual repulsion and fuse together, but quantum tunneling lets them get through anyway. Without that, the sun wouldn&#x27;t shine the way it does, so no sunlight, no life as we know it.</p>
+<p>It&#x27;s easy to assume quantum physics is too abstract to matter for regular people. But it&#x27;s the reason chemistry works, the reason our devices work, and part of the reason the sun is on. We don&#x27;t notice it because the weirdness happens at incredibly tiny scales, but we depend on it constantly. I&#x27;m no expert, and a real physicist would probably wince at some of my simplifications, but the biggest takeaway is that the universe doesn&#x27;t have to make intuitive sense to be useful.</p>
+			<p><a class="inline-link" href="../blog.html">Back to blog</a></p>
+		</article>
+	</main>
+	<script>
+		const themeToggle = document.getElementById('themeToggle');
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		document.body.classList.toggle('light-mode', !prefersDark);
+		document.body.classList.toggle('dark-mode', prefersDark);
+		themeToggle.textContent = prefersDark ? '☀️' : '🌙';
+		themeToggle.addEventListener('click', () => {
+			const isLight = document.body.classList.toggle('light-mode');
+			document.body.classList.toggle('dark-mode', !isLight);
+			themeToggle.textContent = isLight ? '🌙' : '☀️';
+		});
+	</script>
+</body>
+</html>

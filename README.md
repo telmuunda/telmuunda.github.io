@@ -9,9 +9,9 @@ From the repository folder, run:
 python3 scripts/blog_editor.py
 ```
 
-Open http://127.0.0.1:8765 in your browser. The editor writes a static HTML post into `posts/` and adds it to the blog list. Stop the local editor with Ctrl+C. Commit and push the new post and updated index to publish it on GitHub Pages.
+Open http://127.0.0.1:8765/blog-editor.html in your browser. The local server also serves the rest of the site at that address, so you can preview it at http://127.0.0.1:8765/blog.html. The editor writes a static HTML post into `posts/` and adds it to `assets/data/blog-posts.json`. Posts appear in the blog list on their publication date (UTC); until then, they remain hidden from the list. Stop the local editor with Ctrl+C, then commit and push the new post and updated index to publish them on GitHub Pages.
 
-The editor listens only on your own computer; it does not expose a GitHub token or write access to the public website.
+The editor listens only on your own computer; it does not expose a GitHub token or write access to the public website. The committed post files and index are still present in the repository before the publication date, so scheduling hides posts from the site’s list but is not a way to keep their contents secret.
 
 ## Monthly science feature
 

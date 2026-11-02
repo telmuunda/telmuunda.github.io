@@ -49,10 +49,11 @@
 			<div><div class="eyebrow">Local publishing</div><h1>Write a blog post</h1></div>
 			<a href="blog.html">View blog</a>
 		</div>
+		<p>This editor saves posts to your local repository. It does not publish directly to GitHub.</p>
 		<form class="editor-form" id="post-form">
 			<div class="editor-fields">
 				<div class="editor-field"><label for="post-title">Title</label><input id="post-title" name="title" maxlength="120" required /></div>
-				<div class="editor-field"><label for="post-date">Publication date</label><input id="post-date" name="date" type="date" required /></div>
+				<div class="editor-field"><label for="post-date">Publication date (UTC)</label><input id="post-date" name="date" type="date" required /></div>
 			</div>
 			<div class="editor-field"><label for="post-summary">Short summary</label><textarea id="post-summary" name="summary" maxlength="260" required></textarea></div>
 			<div class="editor-field">
@@ -72,6 +73,14 @@
 	</main>
 	<script>
 		const body = document.getElementById('post-body');
+		const publishButton = document.querySelector('#post-form button[type="submit"]');
+		const status = document.getElementById('publish-status');
+		const isLocalEditor = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+			&& window.location.port === '8765';
+		if (!isLocalEditor) {
+			publishButton.disabled = true;
+			status.textContent = 'Publishing works only from the local editor. Run "python3 scripts/blog_editor.py", then open http://127.0.0.1:8765/blog-editor.html.';
+		}
 		document.querySelectorAll('.editor-toolbar button').forEach((button) => {
 			button.addEventListener('click', () => {
 				body.focus();
@@ -87,24 +96,30 @@
 		document.getElementById('post-date').value = new Date().toISOString().slice(0, 10);
 		document.getElementById('post-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
+			if (!isLocalEditor) return;
 			const formElement = event.currentTarget;
-			const status = document.getElementById('publish-status');
 			const form = new FormData(formElement);
 			status.textContent = 'Publishing...';
 			try {
-				const response = await fetch('/publish', {
+				const response = await fetch(`${window.location.origin}/publish`, {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ title: form.get('title'), date: form.get('date'), summary: form.get('summary'), body: body.innerHTML })
 				});
-				const result = await response.json();
+				const responseText = await response.text();
+				let result;
+				try {
+					result = JSON.parse(responseText);
+				} catch {
+					throw new Error(`The local publishing server returned an unexpected response (HTTP ${response.status}). Start it with "python3 scripts/blog_editor.py" and open http://127.0.0.1:8765/blog-editor.html.`);
+				}
 				if (!response.ok) throw new Error(result.error || 'Could not publish post.');
 				status.textContent = `Published ${result.path}. The new post is now in your local repository.`;
 				formElement.reset();
 				body.replaceChildren();
 				document.getElementById('post-date').value = new Date().toISOString().slice(0, 10);
 			} catch (error) {
-				status.textContent = error.message;
+				status.textContent = error instanceof Error ? error.message : 'Could not publish the post.';
 			}
 		});
 	</script>

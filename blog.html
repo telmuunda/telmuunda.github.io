@@ -30,10 +30,9 @@
 				<div class="eyebrow">Blog</div>
 				<h1>Writing and reflections</h1>
 				<p class="blog-intro">
-					This page is for longer-form explanations, study insights, and topics I want to share in more depth.
-					You can add new posts here as they are written, including equations, figures, and references.
+					This page is for study insights, and topics I want to share in more depth.
 				</p>
-
+				<!-- Add longer-form posts here through the local blog editor. -->
 				<div class="blog-featured">
 					<article class="blog-featured-card">
 						<span class="featured-badge" id="news-month">Physics &amp; astronomy news</span>
@@ -44,6 +43,7 @@
 					</article>
 				</div>
 
+				<h2>Blogs</h2>
 				<div class="blog-list">
 				</div>
 				<p class="blog-meta" id="blog-empty" hidden>No posts published yet.</p>
@@ -84,10 +84,16 @@
 				});
 
 			fetch('assets/data/blog-posts.json')
-				.then((response) => response.ok ? response.json() : [])
+				.then((response) => {
+					if (!response.ok) throw new Error('Blog posts are unavailable.');
+					return response.json();
+				})
 				.then((posts) => {
+					if (!Array.isArray(posts)) throw new Error('Blog posts data is invalid.');
 					const list = document.querySelector('.blog-list');
-					for (const post of posts) {
+					const today = new Date().toISOString().slice(0, 10);
+					const publishedPosts = posts.filter((post) => post.sort_date <= today);
+					for (const post of publishedPosts) {
 						const article = document.createElement('article');
 						article.className = 'blog-preview';
 						const date = document.createElement('span');
@@ -104,9 +110,13 @@
 						article.append(date, title, summary, link);
 						list.append(article);
 					}
-					document.getElementById('blog-empty').hidden = posts.length > 0;
+					document.getElementById('blog-empty').hidden = publishedPosts.length > 0;
 				})
-				.catch(() => {});
+				.catch((error) => {
+					const empty = document.getElementById('blog-empty');
+					empty.hidden = false;
+					empty.textContent = error.message;
+				});
 		</script>
 	</body>
 </html>
