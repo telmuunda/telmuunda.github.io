@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from update_physics_news import build_document, parse_feed
 
 
-class PhysicsNewsTests(unittest.TestCase):
+class PhysicsNewsTestCases(unittest.TestCase):
     def test_parse_feed_extracts_safe_story_fields(self):
         feed = b"""<?xml version='1.0'?>
         <rss version='2.0'><channel><item>

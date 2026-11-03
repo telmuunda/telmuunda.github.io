@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import blog_editor
 
@@ -43,6 +44,31 @@ class BlogEditorTests(unittest.TestCase):
             self.assertEqual(result["url"], "posts/a-physics-story.html")
             self.assertEqual(posts[0]["title"], "A Physics Story")
             self.assertEqual(posts[0]["sort_date"], date(2026, 10, 14).isoformat())
+
+    def test_published_post_is_consumed_by_blog_page(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            index = root / "assets" / "data" / "blog-posts.json"
+            index.parent.mkdir(parents=True)
+            index.write_text("[]\n", encoding="utf-8")
+            with patch.multiple(blog_editor, ROOT=root, POSTS_DIR=root / "posts", POST_INDEX=index):
+                result = blog_editor.publish_post({
+                    "title": "Connected Post",
+                    "date": "2026-10-14",
+                    "summary": "A post connected to the blog page.",
+                    "body": "<p>Post content.</p>",
+                })
+
+            posts = json.loads(index.read_text(encoding="utf-8"))
+            page = (REPOSITORY_ROOT / "blog.html").read_text(encoding="utf-8")
+            self.assertEqual(posts[0]["url"], result["url"])
+            self.assertIn("fetch('assets/data/blog-posts.json', { cache: 'no-store' })", page)
+            self.assertIn("document.querySelector('.blog-list')", page)
+            self.assertIn("posts.filter((post) => post.sort_date <= today)", page)
+            self.assertIn("date.textContent = post.date", page)
+            self.assertIn("title.textContent = post.title", page)
+            self.assertIn("summary.textContent = post.summary", page)
+            self.assertIn("link.href = post.url", page)
 
     def test_publish_refuses_to_overwrite_an_existing_post(self):
         with tempfile.TemporaryDirectory() as directory:

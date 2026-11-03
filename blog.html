@@ -83,7 +83,7 @@
 					document.getElementById('news-summary').textContent = 'Please visit ScienceDaily for the latest physics and astronomy reports.';
 				});
 
-			fetch('assets/data/blog-posts.json')
+			fetch('assets/data/blog-posts.json', { cache: 'no-store' })
 				.then((response) => {
 					if (!response.ok) throw new Error('Blog posts are unavailable.');
 					return response.json();
