@@ -17,12 +17,19 @@
 				<nav class="top-nav" aria-label="Section Menu">
 					<a class="nav-link active" href="#about">About</a>
 					<a class="nav-link" href="#work">Work</a>
-					<a class="nav-link" href="#notes">Notes</a>
+					<a class="nav-link" href="blog.html">Blogs</a>
 					<a class="nav-link" href="#projects">Projects</a>
 					<a class="nav-link" href="#contact">Contact</a>
 				</nav>
-				<button class="theme-toggle" id="themeToggle" 
-				type="button" aria-label="Toggle light and dark mode">🌙</button>
+				<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
+					<svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+						<circle cx="12" cy="12" r="4"></circle>
+						<path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+					</svg>
+					<svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+						<path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.5 8.5 0 1 0 20.2 15.1Z"></path>
+					</svg>
+				</button>
 			</div>
 		</header>
 
@@ -34,15 +41,17 @@
 							<h1>Biography</h1>
 							<p>I'm a senior at Mongol Aspiration International School. I enjoy solving 
 								challenging problems in physics and astrophysics. I am currently preparing to qualify for 
-								the national physics olympiad team and participate in APhO and IPhO. 
-								I am part of Mongolia's astronomy and astrophysics team. A full CV is available 
+								the national physics olympiad team and participate in the APhO and IPhO.
+								I was part of Mongolia's astronomy and astrophysics team for the 19th IOAA. A full CV is available
 								<a href="files/cv.pdf" download>here</a>.
-								Previously, I studied at Logarithm, where I became an avid physics enthusiast.
-								 Spreading knowledge is a big mission of mine, so feel free to contact me at 
-								 <a href="mailto:27d_telmuun.d@mongolaspiration.edu.mn">telmuun@mais.edu</a> for physics-related
-								 inquiries. For everything else, try <a href="mailto:telmuun2020temka123@gmail.com">telmuun@gmail.com</a>
-
-							   </p>
+							</p>
+							<p>
+								Previously, I studied at Logarithm, where I first became interested in physics.
+								Sharing knowledge is important to me, so feel free to contact me at
+								<a href="mailto:27d_telmuun.d@mongolaspiration.edu.mn">telmuun@mais.edu</a> for physics-related
+								inquiries. For other questions, you can reach me at
+								<a href="mailto:telmuun2020temka123@gmail.com">telmuun@gmail.com</a>.
+							</p>
 						</div>
 							<div class="portrait-wrap">
 								<div class="portrait-panel">
@@ -68,44 +77,13 @@
 					<div class="card-grid">
 						<article class="card">
 							<h2>Axiom Interactive</h2>
-							<p>A STEM project aimed at developing intuition 
-								with the use of simulations, particularly for physics.
-								 Although it focuses on the A level syllabus, 
-								 it can be a great resource for anyone 
-								 to learn from.  </p>
+							<p>A STEM project that uses simulations to develop intuition in physics and mathematics.
+								I hope it becomes a useful resource for learners.</p>
 						</article>
 						<article class="card">
-							<h2>To be added soon</h2>
-							<p>To be added soon</p>
-						</article>
-					</div>
-				</section>
-
-				<section class="section" id="notes">
-					<div class="eyebrow">Notes</div>
-					<div class="card-grid cards-2">
-						<article class="card">
-							<h2>IAL Notes</h2>
-							<p>Notes and resources I used for my A level studies [Further Math, Physics].</p>
-							<details class="advice-dropdown">
-								<summary>My advice</summary>
-								<div class="dropdown-content">
-									<p>Start by understanding the logic behind the topic instead of memorizing formulas.
-										 A strong foundation in the basics makes harder questions feel much less intimidating.</p>
-
-								</div>
-							</details>
-						</article>
-						<article class="card">
-							<h2>Physics resources</h2>
-							<p>My go-to resources for physics study.</p>
-							<details class="advice-dropdown">
-								<summary>Physics advice</summary>
-								<div class="dropdown-content">
-									<p>Physics becomes much easier when you pair formulas with intuition. Try to understand what the variables mean physically before solving a problem.</p>
-									<p>For handouts, check out <a href="https://knzhou.github.io" target="_blank" rel="noreferrer">Kevin Zhou</a>. I highly recommend reading his advice on studying introductory physics.</p>
-								</div>
-							</details>
+							<h2>Physics Blogs</h2>
+							<p>I publish biweekly posts exploring non-traditional approaches to physics, sharing the latest
+								news in the field, and presenting problems I develop for readers to solve and think about.</p>
 						</article>
 					</div>
 				</section>
@@ -121,7 +99,8 @@
 							<p>The best of my collection</p>
 						</a>
 						<a class="card blog-card project-link" href="blog.html">
-							<h2>Blog</h2>
+							<img class="blog-card-image" src="files/blog-physics.png" alt="Colorful chalk-like diagrams of orbits and equations on a dark background" />
+							<h2>Blogs</h2>
 							<p>Thoughts, explanations, and study notes.</p>
 						</a>
 					</div>
@@ -163,12 +142,9 @@
 
 			document.body.classList.toggle('light-mode', !prefersDark);
 			document.body.classList.toggle('dark-mode', prefersDark);
-			themeToggle.textContent = prefersDark ? '☀️' : '🌙';
-
 			themeToggle.addEventListener('click', () => {
 				const isLight = document.body.classList.toggle('light-mode');
 				document.body.classList.toggle('dark-mode', !isLight);
-				themeToggle.textContent = isLight ? '🌙' : '☀️';
 			});
 
 			const observer = new IntersectionObserver((entries) => {

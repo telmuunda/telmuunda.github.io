@@ -114,7 +114,7 @@ def make_post_page(title, published, body):
 \t\t\t<nav class="top-nav" aria-label="Section Menu">
 \t\t\t\t<a class="nav-link" href="../index.html#about">About</a>
 \t\t\t\t<a class="nav-link" href="../index.html#work">Work</a>
-\t\t\t\t<a class="nav-link" href="../index.html#notes">Notes</a>
+\t\t\t\t<a class="nav-link" href="../blog.html">Blogs</a>
 \t\t\t\t<a class="nav-link active" href="../blog.html">Blog</a>
 \t\t\t\t<a class="nav-link" href="../index.html#contact">Contact</a>
 \t\t\t</nav>

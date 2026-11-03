@@ -39,8 +39,10 @@ class BlogEditorTests(unittest.TestCase):
 
             page = root / "posts" / "a-physics-story.html"
             posts = json.loads(index.read_text(encoding="utf-8"))
+            generated_page = page.read_text(encoding="utf-8")
             self.assertTrue(page.exists())
-            self.assertIn("Thoughts on <em>physics</em>.", page.read_text(encoding="utf-8"))
+            self.assertIn("Thoughts on <em>physics</em>.", generated_page)
+            self.assertIn('<a class="nav-link" href="../blog.html">Blogs</a>', generated_page)
             self.assertEqual(result["url"], "posts/a-physics-story.html")
             self.assertEqual(posts[0]["title"], "A Physics Story")
             self.assertEqual(posts[0]["sort_date"], date(2026, 10, 14).isoformat())

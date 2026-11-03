@@ -91,13 +91,39 @@ img {
 }
 
 .theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
   margin-left: 0;
   border: 1px solid var(--line);
   background: transparent;
   color: #f5f3ee;
   border-radius: 999px;
-  padding: 0.45rem 0.75rem;
+  padding: 0;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.theme-icon {
+  display: none;
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+body.dark-mode .theme-icon-sun,
+body.light-mode .theme-icon-moon {
+  display: block;
 }
 
 .brand {
@@ -134,24 +160,25 @@ img {
 }
 
 .content-shell {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 8vh, 5rem);
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0.9rem 1.4rem 2rem;
+  padding: clamp(2rem, 6vh, 4rem) 1.4rem 3rem;
 }
 
 .section {
-  min-height: 68vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 0.4rem 0;
+  justify-content: flex-start;
 }
 
 .eyebrow {
   color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  font-size: 0.76rem;
+  font-size: 1.15rem;
   margin-bottom: 1rem;
 }
 
@@ -188,6 +215,10 @@ h2 {
 p,
 li {
   color: var(--muted);
+}
+
+#about p a {
+  color: var(--accent-2);
 }
 
 .portrait-panel,
@@ -363,11 +394,20 @@ li {
 .blog-card {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   min-height: 12rem;
   text-decoration: none;
   color: inherit;
+}
+
+.blog-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 0.9rem;
 }
 
 .blog-card-icon {
@@ -390,8 +430,8 @@ li {
 .photo-card-image {
   overflow: hidden;
   border-radius: 16px;
-  width: min(22rem, 100%);
-  aspect-ratio: 4 / 3;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   background: rgba(255, 255, 255, 0.03);
   margin: 0 auto;
 }
@@ -760,7 +800,7 @@ body.light-mode .gallery-caption {
   }
 
   .eyebrow {
-    font-size: 0.72rem;
+    font-size: 1.05rem;
   }
 
   h1 {
@@ -773,5 +813,19 @@ body.light-mode .gallery-caption {
 
   #about p {
     font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .intro-grid,
+  .card-grid,
+  .cards-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+  .portrait-wrap {
+    order: -1;
   }
 }
