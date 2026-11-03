@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>What type of physics should you learn? | Telmuun Davaadalai</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="../assets/css/fontawesome-all.min.css" />
+	<link rel="stylesheet" href="../assets/css/portfolio.css" />
+</head>
+<body>
+	<header class="site-header">
+		<div class="site-header-inner">
+			<a class="brand" href="../index.html#projects">TELMUUN DAVAADALAI</a>
+			<nav class="top-nav" aria-label="Section Menu">
+				<a class="nav-link" href="../index.html#about">About</a>
+				<a class="nav-link" href="../index.html#work">Work</a>
+				<a class="nav-link" href="../index.html#notes">Notes</a>
+				<a class="nav-link active" href="../blog.html">Blog</a>
+				<a class="nav-link" href="../index.html#contact">Contact</a>
+			</nav>
+			<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">🌙</button>
+		</div>
+	</header>
+	<main class="content-shell blog-shell">
+		<article class="blog-post">
+			<span class="blog-meta">November 03, 2026</span>
+			<h1>What type of physics should you learn?</h1>
+			So you&#x27;ve started studying physics. If you&#x27;re in secondary school, you might be starting with something along the lines of F=ma and V=IR; or more complex topics such as electric and magnetic fields, as well as 2 of the 4 fundamental forces, electric and gravity. And you may even be required to have some basic calculus skills if you&#x27;re doing courses like AP Physics C or IB Physics HL. But most programs strictly stick to algebra and trigonometry (A level Physics is unfortunately one of them). So which approach should you take? An easy algebraic approach which can be transformed into calculus-based approach or just start with the latter? The first one is no doubt the &quot;easier&quot; choice, as evident by the dozens of programs following it. But I recommend trodding through the calculus approach, which will be in no way easy, as it typically requires you to study topics ahead of your syllabus. Although the algebra &amp; trig approach is mostly valid, it leaves a lot behind in terms of nuance and detail that are essential for correctly understanding the world around you. You will encounter a lot of counter-intuitive phenomena in problems, and a structured approach through calculus will help you rebuild your intuition, helping you become a better problem solver. Additionally, there&#x27;s a reason Newton had to invent calculus to do any decent physics. Continuous change and flow through space and time is what the universe is; not discrete time intervals or jumps in action. All in all, the algebraic formulas you see are often the end results of derivatives and integrals with strict conditions that most students forget or are not taught in the first place. And even if your syllabus doesn&#x27;t require calculus, it is a tool with which you can derive any formula may see in your textbook, along with some fundamental laws of physics.
+			<p><a class="inline-link" href="../blog.html">Back to blog</a></p>
+		</article>
+	</main>
+	<script>
+		const themeToggle = document.getElementById('themeToggle');
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		document.body.classList.toggle('light-mode', !prefersDark);
+		document.body.classList.toggle('dark-mode', prefersDark);
+		themeToggle.textContent = prefersDark ? '☀️' : '🌙';
+		themeToggle.addEventListener('click', () => {
+			const isLight = document.body.classList.toggle('light-mode');
+			document.body.classList.toggle('dark-mode', !isLight);
+			themeToggle.textContent = isLight ? '🌙' : '☀️';
+		});
+	</script>
+</body>
+</html>
