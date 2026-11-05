@@ -53,7 +53,7 @@
 		<form class="editor-form" id="post-form">
 			<div class="editor-fields">
 				<div class="editor-field"><label for="post-title">Title</label><input id="post-title" name="title" maxlength="120" required /></div>
-				<div class="editor-field"><label for="post-date">Publication date (UTC)</label><input id="post-date" name="date" type="date" required /></div>
+				<div class="editor-field"><label for="post-date">Publication date (local)</label><input id="post-date" name="date" type="date" required /></div>
 			</div>
 			<div class="editor-field"><label for="post-summary">Short summary</label><textarea id="post-summary" name="summary" maxlength="260" required></textarea></div>
 			<div class="editor-field">
@@ -93,7 +93,16 @@
 				document.execCommand(button.dataset.command, false, button.dataset.value || null);
 			});
 		});
-		document.getElementById('post-date').value = new Date().toISOString().slice(0, 10);
+		const postDateInput = document.getElementById('post-date');
+		const setPostDateToToday = () => {
+			const now = new Date();
+			postDateInput.value = [
+				now.getFullYear(),
+				String(now.getMonth() + 1).padStart(2, '0'),
+				String(now.getDate()).padStart(2, '0'),
+			].join('-');
+		};
+		setPostDateToToday();
 		document.getElementById('post-form').addEventListener('submit', async (event) => {
 			event.preventDefault();
 			if (!isLocalEditor) return;
@@ -117,7 +126,7 @@
 				status.textContent = `Published ${result.path}. The new post is now in your local repository.`;
 				formElement.reset();
 				body.replaceChildren();
-				document.getElementById('post-date').value = new Date().toISOString().slice(0, 10);
+				setPostDateToToday();
 			} catch (error) {
 				status.textContent = error instanceof Error ? error.message : 'Could not publish the post.';
 			}

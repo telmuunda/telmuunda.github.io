@@ -42,6 +42,10 @@ class BlogEditorTests(unittest.TestCase):
             generated_page = page.read_text(encoding="utf-8")
             self.assertTrue(page.exists())
             self.assertIn("Thoughts on <em>physics</em>.", generated_page)
+            self.assertIn('<div class="blog-post-shell">', generated_page)
+            self.assertIn('<a class="blog-back-link" href="../blog.html" aria-label="Back to blogs" title="Back to blogs">', generated_page)
+            self.assertIn('<article class="blog-post">', generated_page)
+            self.assertNotIn(">Back to blog</a>", generated_page)
             self.assertIn('<a class="nav-link" href="../blog.html">Blogs</a>', generated_page)
             self.assertEqual(result["url"], "posts/a-physics-story.html")
             self.assertEqual(posts[0]["title"], "A Physics Story")
@@ -66,11 +70,15 @@ class BlogEditorTests(unittest.TestCase):
             self.assertEqual(posts[0]["url"], result["url"])
             self.assertIn("fetch('assets/data/blog-posts.json', { cache: 'no-store' })", page)
             self.assertIn("document.querySelector('.blog-list')", page)
+            self.assertIn("now.getFullYear()", page)
+            self.assertIn("now.getMonth() + 1", page)
+            self.assertIn("now.getDate()", page)
             self.assertIn("posts.filter((post) => post.sort_date <= today)", page)
             self.assertIn("date.textContent = post.date", page)
             self.assertIn("title.textContent = post.title", page)
             self.assertIn("summary.textContent = post.summary", page)
-            self.assertIn("link.href = post.url", page)
+            self.assertIn("contentLink.href = post.url", page)
+            self.assertIn("contentLink.append(title, summary, linkLabel)", page)
 
     def test_publish_refuses_to_overwrite_an_existing_post(self):
         with tempfile.TemporaryDirectory() as directory:

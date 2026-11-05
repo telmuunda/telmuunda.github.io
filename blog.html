@@ -17,8 +17,8 @@
 				<nav class="top-nav" aria-label="Section Menu">
 					<a class="nav-link" href="index.html#about">About</a>
 					<a class="nav-link" href="index.html#work">Work</a>
-					<a class="nav-link" href="blog.html">Blogs</a>
-					<a class="nav-link active" href="index.html#projects">Projects</a>
+					<a class="nav-link active" href="blog.html" aria-current="page">Blogs</a>
+					<a class="nav-link" href="index.html#projects">Projects</a>
 					<a class="nav-link" href="index.html#contact">Contact</a>
 				</nav>
 				<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light and dark mode">
@@ -35,16 +35,12 @@
 
 		<main class="content-shell blog-shell">
 			<section class="section" id="blog-home">
-				<div class="eyebrow">Blog</div>
-				<h1>Writing and reflections</h1>
-				<p class="blog-intro">
-					This page is for study insights, and topics I want to share in more depth.
-				</p>
 				<!-- Add longer-form posts here through the local blog editor. -->
+				<div class="eyebrow"><strong>News</strong></div>
 				<div class="blog-featured">
 					<article class="blog-featured-card">
 						<span class="featured-badge" id="news-month">Physics &amp; astronomy news</span>
-						<h2 id="news-title">Loading the latest science story...</h2>
+						<h2><a class="featured-story-title" id="news-title" href="https://www.sciencedaily.com/news/space_time/astronomy/" target="_blank" rel="noopener noreferrer">Loading the latest science story...</a></h2>
 						<p id="news-summary" aria-live="polite">The monthly feature is being loaded.</p>
 						<p class="blog-meta" id="news-source"></p>
 						<a class="blog-link" id="news-link" href="https://www.sciencedaily.com/news/space_time/astronomy/" target="_blank" rel="noopener noreferrer">Read the original report</a>
@@ -54,8 +50,11 @@
 				<h2>Blogs</h2>
 				<div class="blog-list">
 				</div>
-				<p class="blog-meta" id="blog-empty" hidden>No posts published yet.</p>
-				<p class="blog-meta">News source: <a href="https://www.sciencedaily.com/" target="_blank" rel="noopener noreferrer">ScienceDaily</a>. Headlines and summaries are credited to the original publisher.</p>
+				<p class="blog-meta" id="blog-error" role="alert" hidden></p>
+				<p class="blog-meta">News source: <a href="https://www.sciencedaily.com/" target="_blank" rel="noopener noreferrer">ScienceDaily</a>.</p>
+				<aside class="news-footnote" aria-label="Why follow the news">
+					<p><strong>Why should you care about the news?</strong> In general, competitions take some inspiration from major breakthroughs that happened recently. And also, it's fascinating.</p>
+				</aside>
 			</section>
 		</main>
 
@@ -78,7 +77,9 @@
 				})
 				.then(({ month, story }) => {
 					document.getElementById('news-month').textContent = `Physics & astronomy news · ${month}`;
-					document.getElementById('news-title').textContent = story.title;
+					const titleLink = document.getElementById('news-title');
+					titleLink.textContent = story.title;
+					titleLink.href = story.url;
 					document.getElementById('news-summary').textContent = story.summary;
 					document.getElementById('news-source').textContent = `${story.category} · ${story.published_at} · ScienceDaily`;
 					document.getElementById('news-link').href = story.url;
@@ -96,7 +97,12 @@
 				.then((posts) => {
 					if (!Array.isArray(posts)) throw new Error('Blog posts data is invalid.');
 					const list = document.querySelector('.blog-list');
-					const today = new Date().toISOString().slice(0, 10);
+					const now = new Date();
+					const today = [
+						now.getFullYear(),
+						String(now.getMonth() + 1).padStart(2, '0'),
+						String(now.getDate()).padStart(2, '0'),
+					].join('-');
 					const publishedPosts = posts.filter((post) => post.sort_date <= today);
 					for (const post of publishedPosts) {
 						const article = document.createElement('article');
@@ -104,23 +110,25 @@
 						const date = document.createElement('span');
 						date.className = 'blog-meta';
 						date.textContent = post.date;
+						const contentLink = document.createElement('a');
+						contentLink.className = 'blog-preview-link';
+						contentLink.href = post.url;
 						const title = document.createElement('h3');
 						title.textContent = post.title;
 						const summary = document.createElement('p');
 						summary.textContent = post.summary;
-						const link = document.createElement('a');
-						link.className = 'blog-link';
-						link.href = post.url;
-						link.textContent = 'Read article →';
-						article.append(date, title, summary, link);
+						const linkLabel = document.createElement('span');
+						linkLabel.className = 'blog-link';
+						linkLabel.textContent = 'Read article →';
+						contentLink.append(title, summary, linkLabel);
+						article.append(date, contentLink);
 						list.append(article);
 					}
-					document.getElementById('blog-empty').hidden = publishedPosts.length > 0;
 				})
 				.catch((error) => {
-					const empty = document.getElementById('blog-empty');
-					empty.hidden = false;
-					empty.textContent = error.message;
+					const errorMessage = document.getElementById('blog-error');
+					errorMessage.hidden = false;
+					errorMessage.textContent = error.message;
 				});
 		</script>
 	</body>

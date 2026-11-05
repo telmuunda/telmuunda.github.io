@@ -122,12 +122,18 @@ def make_post_page(title, published, body):
 \t\t</div>
 \t</header>
 \t<main class="content-shell blog-shell">
-\t\t<article class="blog-post">
+\t\t<div class="blog-post-shell">
+\t\t\t<a class="blog-back-link" href="../blog.html" aria-label="Back to blogs" title="Back to blogs">
+\t\t\t\t<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+\t\t\t\t\t<path d="M19 12H5m7 7-7-7 7-7"></path>
+\t\t\t\t</svg>
+\t\t\t</a>
+\t\t\t<article class="blog-post">
 \t\t\t<span class="blog-meta">{date_label}</span>
 \t\t\t<h1>{title_html}</h1>
 \t\t\t{body}
-\t\t\t<p><a class="inline-link" href="../blog.html">Back to blog</a></p>
-\t\t</article>
+\t\t\t</article>
+\t\t</div>
 \t</main>
 \t<script>
 \t\tconst themeToggle = document.getElementById('themeToggle');
